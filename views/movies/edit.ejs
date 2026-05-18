@@ -1,0 +1,53 @@
+<h1>Editar: <%= movie.title %></h1>
+<div class="form-card">
+  <form action="/movies/<%= movie._id %>" method="POST">
+    <div class="form-group">
+      <label>Título *</label>
+      <input type="text" name="title" value="<%= movie.title %>" required>
+    </div>
+    <div class="form-group">
+      <label>Año</label>
+      <input type="number" name="year" value="<%= movie.year || '' %>" min="1888" max="2030">
+    </div>
+    <div class="form-group">
+      <label>Géneros</label>
+      <div class="checkbox-group">
+        <% genres.forEach(g => { %>
+          <label>
+            <input type="checkbox" name="genreIds" value="<%= g._id %>"
+              <%= selectedGenreIds.includes(g.genre_id) ? 'checked' : '' %>>
+            <span><%= g.name %></span>
+          </label>
+        <% }) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Reparto (una línea: Nombre, Rol)</label>
+      <textarea name="cast"><%= castText %></textarea>
+    </div>
+    <div class="form-group">
+      <label>Crew (una línea: Nombre, Rol)</label>
+      <textarea name="crew"><%= crewText %></textarea>
+    </div>
+    <div class="form-group">
+      <label>Duración</label>
+      <input type="text" name="runtime" value="<%= movie.runtime || '' %>">
+    </div>
+    <div class="form-group">
+      <label>Sinopsis</label>
+      <textarea name="summary" rows="4"><%= movie.summary || '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label>Precio ($)</label>
+      <input type="number" name="list_price" step="0.01" value="<%= movie.list_price || '' %>">
+    </div>
+    <div class="form-group">
+      <label>URL de imagen</label>
+      <input type="url" name="image_url" value="<%= movie.image_url || '' %>">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="/movies/<%= movie._id %>" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>

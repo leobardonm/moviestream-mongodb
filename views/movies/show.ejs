@@ -1,0 +1,85 @@
+<div style="margin-bottom:1.2rem">
+  <a href="/movies" class="back-link">← Todas las películas</a>
+</div>
+
+<div class="movie-detail">
+  <div>
+    <% if (movie.image_url) { %>
+      <img src="<%= movie.image_url %>" alt="<%= movie.title %>" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder-img" style="display:none">🎬</div>
+    <% } else { %>
+      <div class="placeholder-img">🎬</div>
+    <% } %>
+    <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap">
+      <a href="/movies/<%= movie._id %>/edit" class="btn btn-secondary">Editar</a>
+      <form action="/movies/<%= movie._id %>/delete" method="POST" onsubmit="return confirm('¿Eliminar esta película?')" style="display:inline">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <h1><%= movie.title %></h1>
+    <p style="color:#666;margin:0.4rem 0 1rem;font-size:0.95rem">
+      <%= movie.year || '—' %>
+      <% if (movie.runtime) { %> · <%= movie.runtime %><% } %>
+      <% if (movie.list_price) { %> · $<%= movie.list_price.toFixed(2) %><% } %>
+    </p>
+
+    <div style="margin-bottom:0.8rem">
+      <% (movie.genres || []).forEach(g => { %>
+        <span class="tag"><%= g.name %></span>
+      <% }) %>
+    </div>
+
+    <% if (movie.summary) { %>
+    <div class="detail-section">
+      <h3>Sinopsis</h3>
+      <p><%= movie.summary %></p>
+    </div>
+    <% } %>
+
+    <% if (movie.cast && movie.cast.length) { %>
+    <div class="detail-section">
+      <h3>Reparto</h3>
+      <div class="person-list">
+        <% movie.cast.slice(0, 8).forEach(c => { %>
+          <div class="person-item">
+            <strong><%= c.name %></strong>
+            <% if (c.role) { %><span class="role"> — <%= c.role %></span><% } %>
+          </div>
+        <% }) %>
+        <% if (movie.cast.length > 8) { %><div class="person-item" style="color:#555">+ <%= movie.cast.length - 8 %> más</div><% } %>
+      </div>
+    </div>
+    <% } %>
+
+    <% if (movie.crew && movie.crew.length) { %>
+    <div class="detail-section">
+      <h3>Crew</h3>
+      <div class="person-list">
+        <% movie.crew.forEach(c => { %>
+          <div class="person-item">
+            <strong><%= c.name %></strong>
+            <% if (c.role) { %><span class="role"> — <%= c.role %></span><% } %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+
+    <% if (movie.awards && (movie.awards.wins || movie.awards.nominations)) { %>
+    <div class="detail-section">
+      <h3>Premios</h3>
+      <p><%= movie.awards.wins %> ganados · <%= movie.awards.nominations %> nominaciones</p>
+    </div>
+    <% } %>
+
+    <% if (movie.studio && movie.studio.name) { %>
+    <div class="detail-section">
+      <h3>Estudio</h3>
+      <p><%= movie.studio.name %></p>
+    </div>
+    <% } %>
+  </div>
+</div>

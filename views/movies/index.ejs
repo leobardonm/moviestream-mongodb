@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>Películas</h1>
+  <a href="/movies/new" class="btn btn-primary">+ Nueva</a>
+</div>
+
+<form class="toolbar" method="GET" action="/movies">
+  <input type="text" name="search" placeholder="Buscar por título..." value="<%= search %>">
+  <select name="genre" onchange="this.form.submit()">
+    <option value="">Todos los géneros</option>
+    <% genres.forEach(g => { %>
+      <option value="<%= g.name %>" <%= selectedGenre === g.name ? 'selected' : '' %>><%= g.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit" class="btn btn-secondary">Buscar</button>
+  <% if (search || selectedGenre) { %>
+    <a href="/movies" class="btn btn-secondary">× Limpiar</a>
+  <% } %>
+</form>
+
+<div class="grid">
+  <% movies.forEach(movie => { %>
+    <div class="card">
+      <a href="/movies/<%= movie._id %>">
+        <% if (movie.image_url) { %>
+          <img src="<%= movie.image_url %>" alt="<%= movie.title %>" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="placeholder-img" style="display:none">🎬</div>
+        <% } else { %>
+          <div class="placeholder-img">🎬</div>
+        <% } %>
+      </a>
+      <div class="card-body">
+        <div class="card-title"><%= movie.title %></div>
+        <div class="card-meta"><%= movie.year || '—' %> · $<%= (movie.list_price || 0).toFixed(2) %></div>
+        <div class="card-actions">
+          <a href="/movies/<%= movie._id %>/edit" class="btn btn-secondary btn-sm">Editar</a>
+          <form action="/movies/<%= movie._id %>/delete" method="POST" onsubmit="return confirm('¿Eliminar?')" style="display:inline">
+            <button type="submit" class="btn btn-danger btn-sm">×</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+  <% if (!movies.length) { %>
+    <div class="empty-state">No se encontraron películas.</div>
+  <% } %>
+</div>
+
+<% if (movies.length === 200) { %>
+  <p style="color:#555;text-align:center;margin-top:1.5rem;font-size:0.85rem">Mostrando 200 resultados. Usa el buscador para filtrar.</p>
+<% } %>

@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/genre/genre.csv -o /Users/leobardo/Desktop/tareadb/data/genre.csv)",
+      "Bash(curl -s https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/customer_segment/customer_segment.csv -o /Users/leobardo/Desktop/tareadb/data/customer_segment.csv)",
+      "Bash(curl -s https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/movie/movies.json -o /Users/leobardo/Desktop/tareadb/data/movies.json)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/Users/leobardo/Desktop/tareadb/data/movies.json'\\)\\); print\\(type\\(d\\)\\); print\\(len\\(d\\) if isinstance\\(d,list\\) else list\\(d.keys\\(\\)\\)[:5]\\); m=d[0] if isinstance\\(d,list\\) else list\\(d.values\\(\\)\\)[0]; print\\(list\\(m.keys\\(\\)\\)\\)\")",
+      "Bash(curl -sI https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/customer/customer.csv)",
+      "Bash(curl -s https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/activity/activity.json -o /Users/leobardo/Desktop/tareadb/data/activity.json)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(type\\(d\\), len\\(d\\) if isinstance\\(d,list\\) else 'not list'\\); print\\(d[0] if isinstance\\(d,list\\) else list\\(d.keys\\(\\)\\)\\)\")",
+      "Bash(curl -s -r 0-5000 https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/customer/customer.csv)",
+      "Bash(python3:*)",
+      "Bash(curl -s https://objectstorage.us-ashburn-1.oraclecloud.com/n/c4u04/b/moviestream_landing/o/customer/customer.csv -o /Users/leobardo/Desktop/tareadb/data/customer.csv)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(node --check server.js)",
+      "Bash(node --check /Users/leobardo/Desktop/tareadb/models/Genre.js)",
+      "Bash(node --check /Users/leobardo/Desktop/tareadb/models/Movie.js)",
+      "Bash(node --check /Users/leobardo/Desktop/tareadb/models/Customer.js)",
+      "Bash(node --check seed.js)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(node --check routes/genres.js)",
+      "Bash(node --check routes/movies.js)",
+      "Bash(node:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/movies)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

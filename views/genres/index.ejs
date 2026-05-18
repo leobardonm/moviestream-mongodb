@@ -1,0 +1,21 @@
+<div class="page-header">
+  <h1>Géneros</h1>
+  <a href="/genres/new" class="btn btn-primary">+ Nuevo</a>
+</div>
+
+<div class="list">
+  <% genres.forEach(genre => { %>
+    <div class="list-item">
+      <span><%= genre.name %></span>
+      <div class="list-actions">
+        <a href="/genres/<%= genre._id %>/edit" class="btn btn-secondary btn-sm">Editar</a>
+        <form action="/genres/<%= genre._id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('¿Eliminar \'' + '<%= genre.name %>' + '\'?')">
+          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  <% }) %>
+  <% if (!genres.length) { %>
+    <p style="color:#666">No hay géneros. <a href="/genres/new" style="color:#e50914">Crea uno</a>.</p>
+  <% } %>
+</div>
