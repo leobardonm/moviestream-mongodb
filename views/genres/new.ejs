@@ -1,13 +1,15 @@
-<h1>Nuevo Género</h1>
-<div class="form-card">
-  <form action="/genres" method="POST">
-    <div class="form-group">
-      <label>Nombre</label>
-      <input type="text" name="name" required autofocus placeholder="ej: Ciencia Ficción">
-    </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <a href="/genres" class="btn btn-secondary">Cancelar</a>
-    </div>
-  </form>
+<div class="form-page">
+  <h1 class="form-page-title">Nuevo Género</h1>
+  <div class="form-card">
+    <form action="/genres" method="POST">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" name="name" required autofocus placeholder="ej: Ciencia Ficción">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="/genres" class="btn btn-ghost">Cancelar</a>
+      </div>
+    </form>
+  </div>
 </div>

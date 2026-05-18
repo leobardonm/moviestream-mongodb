@@ -1,21 +1,26 @@
 <div class="page-header">
-  <h1>Géneros</h1>
+  <div>
+    <span class="page-title-count"><%= genres.length %> géneros</span>
+    <h1 class="page-title">Géneros</h1>
+  </div>
   <a href="/genres/new" class="btn btn-primary">+ Nuevo</a>
 </div>
 
-<div class="list">
-  <% genres.forEach(genre => { %>
-    <div class="list-item">
-      <span><%= genre.name %></span>
-      <div class="list-actions">
-        <a href="/genres/<%= genre._id %>/edit" class="btn btn-secondary btn-sm">Editar</a>
-        <form action="/genres/<%= genre._id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('¿Eliminar \'' + '<%= genre.name %>' + '\'?')">
-          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+<div class="genre-grid">
+  <% genres.forEach((genre, i) => { %>
+    <div class="genre-item">
+      <span class="genre-num"><%= String(i+1).padStart(2,'0') %></span>
+      <span class="genre-name"><%= genre.name %></span>
+      <div class="genre-actions">
+        <a href="/genres/<%= genre._id %>/edit" class="btn btn-ghost btn-sm">Editar</a>
+        <form action="/genres/<%= genre._id %>/delete" method="POST" style="display:inline"
+              onsubmit="return confirm('¿Eliminar ' + '<%= genre.name %>' + '?')">
+          <button type="submit" class="btn btn-danger btn-sm">×</button>
         </form>
       </div>
     </div>
   <% }) %>
   <% if (!genres.length) { %>
-    <p style="color:#666">No hay géneros. <a href="/genres/new" style="color:#e50914">Crea uno</a>.</p>
+    <p style="color:var(--text-muted)">No hay géneros. <a href="/genres/new" style="color:var(--accent)">Crea uno</a>.</p>
   <% } %>
 </div>

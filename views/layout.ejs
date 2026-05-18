@@ -4,18 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MovieStream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <nav>
-    <a href="/movies" class="brand">🎬 MovieStream</a>
+  <nav class="nav">
+    <a href="/movies" class="nav-brand">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#E8B84B" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#E8B84B"/></svg>
+      <span>MOVIESTREAM</span>
+    </a>
     <div class="nav-links">
-      <a href="/movies">Películas</a>
-      <a href="/genres">Géneros</a>
+      <a href="/movies" class="nav-link">Películas</a>
+      <a href="/genres" class="nav-link">Géneros</a>
     </div>
   </nav>
-  <main>
+  <main class="main">
     <%- body %>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(24px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 60 + i * 35);
+      });
+    });
+  </script>
 </body>
 </html>

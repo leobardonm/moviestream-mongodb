@@ -1,85 +1,90 @@
-<div style="margin-bottom:1.2rem">
-  <a href="/movies" class="back-link">← Todas las películas</a>
-</div>
+<a href="/movies" class="back-link">← Películas</a>
 
 <div class="movie-detail">
-  <div>
+  <div class="movie-poster-col">
     <% if (movie.image_url) { %>
-      <img src="<%= movie.image_url %>" alt="<%= movie.title %>" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder-img" style="display:none">🎬</div>
+      <img class="movie-poster" src="<%= movie.image_url %>" alt="<%= movie.title %>"
+           onerror="this.outerHTML='<div class=\'movie-poster-placeholder\'>◈</div>'">
     <% } else { %>
-      <div class="placeholder-img">🎬</div>
+      <div class="movie-poster-placeholder">◈</div>
     <% } %>
-    <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-      <a href="/movies/<%= movie._id %>/edit" class="btn btn-secondary">Editar</a>
+    <div class="movie-actions">
+      <a href="/movies/<%= movie._id %>/edit" class="btn btn-ghost">Editar</a>
       <form action="/movies/<%= movie._id %>/delete" method="POST" onsubmit="return confirm('¿Eliminar esta película?')" style="display:inline">
         <button type="submit" class="btn btn-danger">Eliminar</button>
       </form>
     </div>
   </div>
 
-  <div>
-    <h1><%= movie.title %></h1>
-    <p style="color:#666;margin:0.4rem 0 1rem;font-size:0.95rem">
-      <%= movie.year || '—' %>
-      <% if (movie.runtime) { %> · <%= movie.runtime %><% } %>
-      <% if (movie.list_price) { %> · $<%= movie.list_price.toFixed(2) %><% } %>
-    </p>
+  <div class="movie-info-col">
+    <h1 class="movie-title"><%= movie.title %></h1>
 
-    <div style="margin-bottom:0.8rem">
-      <% (movie.genres || []).forEach(g => { %>
-        <span class="tag"><%= g.name %></span>
-      <% }) %>
+    <div class="movie-meta-row">
+      <% if (movie.year) { %><span><%= movie.year %></span><% } %>
+      <% if (movie.runtime) { %><span class="movie-meta-sep">·</span><span><%= movie.runtime %></span><% } %>
+      <% if (movie.list_price) { %><span class="movie-meta-sep">·</span><span>$<%= movie.list_price.toFixed(2) %></span><% } %>
+      <% if (movie.studio && movie.studio.name) { %><span class="movie-meta-sep">·</span><span><%= movie.studio.name %></span><% } %>
     </div>
+
+    <% if (movie.genres && movie.genres.length) { %>
+      <div class="tags">
+        <% movie.genres.forEach(g => { %><span class="tag"><%= g.name %></span><% }) %>
+      </div>
+    <% } %>
 
     <% if (movie.summary) { %>
-    <div class="detail-section">
-      <h3>Sinopsis</h3>
-      <p><%= movie.summary %></p>
-    </div>
+      <div class="detail-section">
+        <div class="detail-label">Sinopsis</div>
+        <p class="detail-text"><%= movie.summary %></p>
+      </div>
+      <div class="divider"></div>
     <% } %>
 
     <% if (movie.cast && movie.cast.length) { %>
-    <div class="detail-section">
-      <h3>Reparto</h3>
-      <div class="person-list">
-        <% movie.cast.slice(0, 8).forEach(c => { %>
-          <div class="person-item">
-            <strong><%= c.name %></strong>
-            <% if (c.role) { %><span class="role"> — <%= c.role %></span><% } %>
-          </div>
-        <% }) %>
-        <% if (movie.cast.length > 8) { %><div class="person-item" style="color:#555">+ <%= movie.cast.length - 8 %> más</div><% } %>
+      <div class="detail-section">
+        <div class="detail-label">Reparto</div>
+        <div class="person-grid">
+          <% movie.cast.slice(0, 8).forEach(c => { %>
+            <div class="person-chip">
+              <div class="person-chip-name"><%= c.name %></div>
+              <% if (c.role) { %><div class="person-chip-role"><%= c.role %></div><% } %>
+            </div>
+          <% }) %>
+          <% if (movie.cast.length > 8) { %>
+            <div class="person-chip" style="display:flex;align-items:center;color:var(--text-muted);font-size:0.8rem">
+              +<%= movie.cast.length - 8 %> más
+            </div>
+          <% } %>
+        </div>
       </div>
-    </div>
     <% } %>
 
     <% if (movie.crew && movie.crew.length) { %>
-    <div class="detail-section">
-      <h3>Crew</h3>
-      <div class="person-list">
-        <% movie.crew.forEach(c => { %>
-          <div class="person-item">
-            <strong><%= c.name %></strong>
-            <% if (c.role) { %><span class="role"> — <%= c.role %></span><% } %>
-          </div>
-        <% }) %>
+      <div class="detail-section">
+        <div class="detail-label">Crew</div>
+        <div class="person-grid">
+          <% movie.crew.forEach(c => { %>
+            <div class="person-chip">
+              <div class="person-chip-name"><%= c.name %></div>
+              <% if (c.role) { %><div class="person-chip-role"><%= c.role %></div><% } %>
+            </div>
+          <% }) %>
+        </div>
       </div>
-    </div>
     <% } %>
 
     <% if (movie.awards && (movie.awards.wins || movie.awards.nominations)) { %>
-    <div class="detail-section">
-      <h3>Premios</h3>
-      <p><%= movie.awards.wins %> ganados · <%= movie.awards.nominations %> nominaciones</p>
-    </div>
-    <% } %>
-
-    <% if (movie.studio && movie.studio.name) { %>
-    <div class="detail-section">
-      <h3>Estudio</h3>
-      <p><%= movie.studio.name %></p>
-    </div>
+      <div class="detail-section">
+        <div class="detail-label">Premios</div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+          <% if (movie.awards.wins) { %>
+            <span class="award-pill">★ <%= movie.awards.wins %> premio<%= movie.awards.wins !== 1 ? 's' : '' %></span>
+          <% } %>
+          <% if (movie.awards.nominations) { %>
+            <span class="award-pill">◇ <%= movie.awards.nominations %> nominación<%= movie.awards.nominations !== 1 ? 'es' : '' %></span>
+          <% } %>
+        </div>
+      </div>
     <% } %>
   </div>
 </div>
