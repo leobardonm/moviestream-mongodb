@@ -318,6 +318,11 @@ body {
   transition: opacity 0.2s, transform 0.2s;
 }
 .card:hover .card-actions { opacity: 1; transform: translateY(0); }
+/* Touch devices: no hover state — always show actions */
+@media (hover: none) {
+  .card-actions { opacity: 1; transform: translateY(0); }
+  .card-overlay { opacity: 1; transform: translateY(0); }
+}
 
 /* ─── Movie Detail Page ─────────────────────────────────────────── */
 .back-link {

@@ -10,10 +10,14 @@ router.get('/', async (req, res) => {
     const filter = {};
     if (search) filter.title = { $regex: search, $options: 'i' };
     if (genre) filter['genres.name'] = genre;
-    const movies = await Movie.find(filter).sort('title').limit(200);
-    const genres = await Genre.find().sort('name');
+    const [movies, totalCount, genres] = await Promise.all([
+      Movie.find(filter).sort('title').limit(200),
+      Movie.countDocuments(filter),
+      Genre.find().sort('name')
+    ]);
     res.render('movies/index', {
       movies,
+      totalCount,
       genres,
       search: search || '',
       selectedGenre: genre || ''
