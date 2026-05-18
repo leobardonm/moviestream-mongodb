@@ -105,6 +105,6 @@ Ver [REFLECTION.md](./REFLECTION.md) para el análisis honesto de trade-offs NoS
 
 ## Screenshot
 
-![MovieStream catalog](https://moviestream-mongodb.onrender.com)
+![MovieStream catalog](./screenshot_app.png)
 
 > App desplegada en: [https://moviestream-mongodb.onrender.com](https://moviestream-mongodb.onrender.com)
